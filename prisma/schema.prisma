@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Soci {
+  sociId     Int            @id @default(autoincrement())
+  nom        String
+  cognoms    String
+  dni        String         @db.VarChar(9)
+  email      String?
+  actiu      Boolean        @default(true)
+  dataAlta   DateTime       @default(now())
+  comissions ComissioSoci[]
+  quotaSoci  QuotaSoci?
+}
+
+model Quota {
+  quotaId   Int         @id @default(autoincrement())
+  nom       String      @unique
+  quotaSoci QuotaSoci[]
+}
+
+model QuotaSoci {
+  quotaSociId Int    @id @default(autoincrement())
+  quantitat   Int
+  iban        String @db.VarChar(24)
+  quotaId     Int
+  sociId      Int    @unique
+  quota       Quota  @relation(fields: [quotaId], references: [quotaId])
+  soci        Soci   @relation(fields: [sociId], references: [sociId], onDelete: Cascade)
+}
+
+model Comissio {
+  comissioId   Int            @id @default(autoincrement())
+  nom          String         @unique
+  comissioSoci ComissioSoci[]
+}
+
+model ComissioSoci {
+  comissioSocisId Int      @id @default(autoincrement())
+  comissioId      Int
+  sociId          Int
+  comissio        Comissio @relation(fields: [comissioId], references: [comissioId])
+  soci            Soci     @relation(fields: [sociId], references: [sociId], onDelete: Cascade)
+}
