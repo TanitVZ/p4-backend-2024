@@ -4,9 +4,9 @@ import type { ZodError } from "zod";
 
 const zodErrorMessage = (err: ZodError): string => {
   const [firstIssue] = err.issues;
-  // console.log(err.issues);
+   console.log(err.issues);
   const { code, path, message } = firstIssue;
-  // console.log(`Zod error:${code}`);
+   console.log(`Zod error:${code}`);
   switch (code) {
     case "too_small": {
       return `${path[0]} massa petit.`;

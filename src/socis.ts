@@ -2,7 +2,7 @@ import { Router } from "express";
 import { db } from "./db";
 import { catchErrors } from "./errors";
 import { send } from "./response";
-import { z } from "zod";
+import { ZodError, z } from "zod";
 import { validarDNI, validarIBAN } from "./validateCustom";
 
 const router = Router();
@@ -69,8 +69,12 @@ router.delete(
   "/soci/:id",
   catchErrors(async (req, res) => {
     const { id: sociId } = idParamSchema.parse(req.params);
+
+    await db.soci.findUniqueOrThrow({ where: { sociId } });
+
     const deletedSoci = await db.soci.delete({ where: { sociId } });
     send(res).ok(deletedSoci);
+    
   })
 );
 
@@ -79,6 +83,8 @@ router.put(
   catchErrors(async (req, res) => {
     const { id: sociId } = idParamSchema.parse(req.params);
 
+    await db.soci.findUniqueOrThrow({ where: { sociId } });
+    
     const updateSoci = await db.soci.update({
       where: { sociId },
       data: {
@@ -150,6 +156,9 @@ router.put(
   "/quotes/:id",
   catchErrors(async (req, res) => {
     const { id: quotaSociId } = idParamSchema.parse(req.params);
+    
+    await db.quotaSoci.findUniqueOrThrow({where: { quotaSociId }});
+
     console.log(`id:${quotaSociId}`);
     const updateQuota = await db.quotaSoci.update({
       where: { quotaSociId },
@@ -207,6 +216,9 @@ router.delete(
   "/comissio/:id",
   catchErrors(async (req, res) => {
     const { id: comissioSocisId } = idParamSchema.parse(req.params);
+
+    await db.comissioSoci.findUniqueOrThrow({where: { comissioSocisId }});
+    
     const deletedComissioSoci = await db.comissioSoci.delete({
       where: { comissioSocisId },
     });
