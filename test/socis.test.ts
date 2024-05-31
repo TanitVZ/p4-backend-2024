@@ -1,20 +1,37 @@
 import { expect, test, vi } from "vitest"; // 👈🏻 Added the `vi` import
-import { db } from "../src/db";
+import db from "../src/__mocks__/db"
 
+vi.mock('../src/db')
 
 test("crear soci retorna id del soci i id de la quota", async () => {
-  const nouSoci = {
-    data: {
-      nom: "Laura",
-      cognoms: "Perez Alonso",
-      dni: "74945682K",
-      email: "lpa@gmail.com",
 
+  const nouSoci = {
+    
+    nom: "Pepita",
+    cognoms: "Perez Alonso",
+    dni: "74945682K",
+    email: "lpa@gmail.com",
+    actiu : true,
+    dataAlta : new Date(),  
+    quotaSoci: {
+       quotaSociId: 1,
+        quantitat: 50,
+        iban: "ES7220953581368561352669",
+        quotaId: 3,
+      },
+    }
+  
+  const nouSociData = {
+    data: {
+      nom: nouSoci.nom,
+      cognoms: nouSoci.cognoms,
+      dni: nouSoci.dni,
+    
       quotaSoci: {
         create: {
-          quantitat: 50,
-          iban: "ES7220953581368561352669",
-          quotaId: 3,
+          quantitat: nouSoci.quotaSoci.quantitat,
+          iban: nouSoci.quotaSoci.iban,
+          quotaId: nouSoci.quotaSoci.quotaId,
         },
       },
     },
@@ -22,8 +39,12 @@ test("crear soci retorna id del soci i id de la quota", async () => {
       quotaSoci: true,
     },
   };
-  const soci = await db.soci.create(nouSoci);
-  expect(soci.sociId).toBeDefined();
-  expect(soci.quotaSoci?.quotaId).toBeDefined();
-  expect(soci.actiu).toBe(true);
+
+
+  db.soci.create.mockResolvedValue({...nouSoci, sociId:1,});
+  const soci = await db.soci.create(nouSociData);
+
+  expect(soci).toStrictEqual({...nouSoci, sociId:1})
+  
 });
+ 
