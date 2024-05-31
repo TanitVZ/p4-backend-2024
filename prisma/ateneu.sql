@@ -281,7 +281,7 @@ COPY public."QuotaSoci" ("quotaSociId", quantitat, iban, "quotaId", "sociId") FR
 4	15	ES1520956067347973178439	2	4
 5	30	ES8502412465310302229896	2	5
 1	30	ES0620952995126669338708	1	1
-19	30	ES7801289845964173342132	3	22
+6	30	ES7801289845964173342132	3	6
 \.
 
 
@@ -290,12 +290,12 @@ COPY public."QuotaSoci" ("quotaSociId", quantitat, iban, "quotaId", "sociId") FR
 --
 
 COPY public."Soci" ("sociId", nom, cognoms, dni, email, actiu, "dataAlta") FROM stdin;
+1	Arnau	Valls Bermúdez	55078681Y	arnau.mer@gmail.com	t	2024-05-04 09:16:44.534
 2	Laura	Rubio Planes	25783686L	laura84@hotmail.com	t	2024-05-01 14:59:43.935
 3	Iván	Paris Nuñez	25783686L	ivanpn@gmail.com	t	2024-05-01 14:59:43.939
 4	Raquel	Montserrat Costa	29828114N	\N	t	2024-05-01 14:59:43.941
 5	Marta	Canós Iglesias	69110185S	marta.canos@gmail.com	t	2024-05-01 14:59:43.946
-1	Arnau	Valls Bermúdez	55078681Y	arnau.mer@gmail.com	t	2024-05-04 09:16:44.534
-22	Laia	Durán Xortó	55318423L	l.duran@gmail.com	t	2024-05-05 17:15:21.793
+6   Laia	Durán Xortó	55318423L	l.duran@gmail.com	t	2024-05-05 17:15:21.793
 \.
 
 
