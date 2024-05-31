@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "bun --hot src/server.ts",
-    "test": "vitest"
+    "test": "vitest",
+    "test:unit": "vitest -c ./vitest.config.unit.ts",
+    "test:unit:ui": "vitest -c ./vitest.config.unit.ts --ui"
   },
   "devDependencies": {
     "@types/bun": "latest",

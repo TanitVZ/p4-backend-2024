@@ -52,7 +52,6 @@ export const catchErrors =
   (myHandler: RequestHandler): RequestHandler =>
   async (req, res, next) => {
     try {
-      console.log("estic a errors");
       await myHandler(req, res, next);
     } catch (e) {
       next(e);
