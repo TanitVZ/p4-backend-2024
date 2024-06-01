@@ -1,14 +1,5 @@
 import { Router } from "express";
-import { db } from "./db";
-import { catchErrors } from "./errors";
-import { send } from "./response";
 
-import {
-  idParamSchema,
-  sociComissioBodySchema,
-  sociQuotaBodySchema,
-} from "./schemas";
-//import { getAllSocis, getSociPerId } from "./controllers";
 import * as SociController from "./serviceController";
 const router = Router();
 

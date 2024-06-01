@@ -2,11 +2,6 @@ import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   test: {
-    include: ['src/test/socis.test.ts']
-  },
-  resolve: {
-    alias: {
-      socis: 'src/socis'
-    }
+    include: ['./src/test/*.test.ts']
   }
-})
+}) 
