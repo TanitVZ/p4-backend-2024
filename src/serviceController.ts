@@ -1,4 +1,4 @@
-import { db } from "./db";
+import  db  from "./db";
 import { catchErrors } from "./errors";
 import { send } from "./response";
 import {
