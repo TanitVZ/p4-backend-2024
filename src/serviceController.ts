@@ -21,8 +21,11 @@ export const getAllSocis = catchErrors(async (req, res) => {
 });
 
 export const getSociById = catchErrors(async (req, res) => {
+  console.log(req.params); 
   const { id: sociId } = idParamSchema.parse(req.params);
   const soci = await db.soci.findUniqueOrThrow({ where: { sociId } });
+  console.log(soci);
+  //console.log(res);
   send(res).ok(soci);
 });
 

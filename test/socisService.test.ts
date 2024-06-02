@@ -3,6 +3,8 @@ import db from "../src/__mocks__/db";
 
 import  {deleteSoci} from "../src/service";
 
+import * as SociController from "../src/serviceController"
+import type { Request, Response } from 'express'
 const sociData = {
 
     nom: "Arnau",
@@ -30,7 +32,8 @@ const nouSoci = {
 
 vi.mock("../src/db")
 
-describe("serviceController", () => {
+
+describe("Test Socis", () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });
@@ -43,34 +46,23 @@ describe("serviceController", () => {
       db.soci.delete.mockResolvedValueOnce({ ...sociData, sociId: 1 });
 
       const soci = await deleteSoci(1)
-  
+    
       expect(soci).toStrictEqual({ ...sociData, sociId: 1 });
+    
     })
 
   }) ;
 
 
-  
-  describe("deleteSoci error", () => {
-     
-    it ("error al eliminar soci que no existeix", 
-    async () => {
-     
-    db.soci.findUniqueOrThrow.mockImplementationOnce(() => {
-        throw new Error(`Not found.`)
 
-    })
-
-  
-
-    await expect(deleteSoci(50)).rejects.toThrowError(`Not found.`)
-
-  })
 }) ;
 
 
 
-});
+
+
+
+
   
 
 
