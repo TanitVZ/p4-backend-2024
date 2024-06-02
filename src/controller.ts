@@ -29,10 +29,9 @@ send(res).ok(sociQuota);
 
 export const updateSociById = catchErrors(async (req, res) => {
   const { id: sociId } = idParamSchema.parse(req.params);
-  console.log(sociId);
   const sociData = sociBodyUpdateSchema.parse(req.body)
   console.log(sociData);
   const soci = await SociService.updateSociById(sociId, sociData)
-  console.log(soci);
+  
   send(res).ok(soci);
 });
