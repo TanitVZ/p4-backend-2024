@@ -1,9 +1,9 @@
 import { expect, describe, vi, beforeEach, it } from "vitest"; // 👈🏻 Added the `vi` import
 import db from "../src/__mocks__/db";
 
-import  {deleteSociById, updateSociById} from "../src/service";
+import  {createComissionsSocis, deleteSociById, updateSociById} from "../src/service";
 
-import type { SociBodyUpdate } from "../src/schemas";
+import type { SociBodyUpdate, SociComissioBody } from "../src/schemas";
 const sociData = {
 
     nom: "Arnau",
@@ -14,29 +14,20 @@ const sociData = {
     dataAlta: new Date()
   
 }
-const nouSoci = {
-  nom: "Pepita",
-  cognoms: "Perez Alonso",
-  dni: "74945682K",
-  email: "lpa@gmail.com",
-  actiu: true,
-  dataAlta: new Date(),
-  quotaSoci: {
-    quotaSociId: 1,
-    quantitat: 50,
-    iban: "ES7220953581368561352669",
-    quotaId: 3,
-  },
+
+
+const sociComissioData: SociComissioBody = {
+  sociId: 1,
+  comissioId: [2, 3, 4],
+};
+
+const resultCreateComissio = {
+  count: 3,
 };
 
 vi.mock("../src/db")
 
-/*
-describe("Test Socis", () => {
-  beforeEach(() => {
-    vi.resetAllMocks();
-  });
-*/
+
   describe("Test socis", () => {
     beforeEach(() => {
       vi.resetAllMocks();
@@ -71,6 +62,52 @@ describe("Test Socis", () => {
 
 
 
+  describe('Test comissions', () => {
+    beforeEach(() => {
+      vi.resetAllMocks(); 
+    });
+  
+    it('crea les comissions del soci', async () => {
+
+ 
+      db.comissioSoci.createMany.mockResolvedValueOnce(resultCreateComissio); 
+  
+  
+      const comissions = await createComissionsSocis(sociComissioData); 
+  
+      expect(comissions).toEqual(resultCreateComissio);
+      expect(db.comissioSoci.createMany).toHaveBeenCalledTimes(1);
+      expect(db.comissioSoci.createMany).toHaveBeenCalledWith( {
+        data: [
+          { comissioId : 2, sociId: 1},
+          { comissioId : 3, sociId: 1},
+          { comissioId : 4, sociId: 1},
+
+        ]
+
+      });
+     
+    });
+  
+   
+  });
+
+/* Funciona la prova, però no és vàlida, s'hauria de fer en el testos del controller
+  describe("deleteSoci error", () => {
+
+    it ("error al eliminar soci que no existeix", 
+    async () => {
+
+    db.soci.findUniqueOrThrow.mockImplementationOnce(() => {
+        throw new Error(`Not found.`)
+
+    })
+
+    await expect(deleteSociById(50)).rejects.toThrowError(`Not found.`)
+
+  })
+}) ;
+*/
 //}) ;
 
 

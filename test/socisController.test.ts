@@ -1,4 +1,4 @@
-import { getSociById } from '../src/controller';
+import { deleteSociById, getSociById } from '../src/controller';
 import type { Request, Response , NextFunction } from 'express';
 import { expect, describe, vi, beforeEach, it } from 'vitest';
 import db from '../src/__mocks__/db';
@@ -58,6 +58,7 @@ describe('getSociById success', () => {
   });
 
   /*
+  NO FUNCIONA, dona resposta "undefined"
   it('retorna error si el soci no existeix', async () => {
     db.soci.findUniqueOrThrow.mockRejectedValueOnce(new Error ('Not Found'))
 
@@ -76,3 +77,5 @@ describe('getSociById success', () => {
   });
 */
 }); 
+
+
