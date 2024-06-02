@@ -155,4 +155,22 @@ export const deleteComissioById = async (comissioSocisId: number) => {
   return deletedComissioSoci;
 };
 
-//export const createSociAndQuota = async (sociData : sociQuotaBodySchema)
+export const getSocisByQuotaId = async (quotaId : number) => {
+  
+  const socis = await db.quotaSoci.findMany( { where: {quotaId}});
+  const sociList = [];
+  const socisId = socis.map(soci => soci.sociId)
+ 
+
+  for (const sociId of socisId ) {
+
+    const soci = await getSociById(sociId)
+  
+ 
+    sociList.push({"nomComplet": `${soci.nom} ${soci.cognoms}`, "dni": `${soci.dni}` })
+  }
+  console.log(sociList)
+ 
+  return sociList;
+ 
+}

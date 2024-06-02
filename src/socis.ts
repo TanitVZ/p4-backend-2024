@@ -12,12 +12,15 @@ router.get("/soci/:id", SociController.getSociById);
 
 router.put("/soci/:id", SociController.updateSociById);
 
+router.get("/sociTipusQuotes/:id", SociController.getSocisByQuotaId);
+
 //QUOTES
 router.get("/quotes", SociController.getAllQuotes);
 
 router.post("/quotes", SociController.createSociAndQuota);
 
 router.put("/quotes/:id", SociController.updateQuota);
+
 
 //COMISSIONS
 

@@ -76,3 +76,13 @@ export const deleteComissioById = catchErrors(async (req, res) => {
   );
   send(res).ok(deletedComissioSoci);
 });
+
+export const getSocisByQuotaId = catchErrors(async (req, res) => {
+  const { id: quotaId } = idParamSchema.parse(req.params);
+
+  const socis = await SociService.getSocisByQuotaId(
+    quotaId
+  );  
+  send(res).ok(socis);
+});
+ 

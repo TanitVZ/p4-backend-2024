@@ -61,3 +61,6 @@ export type QuotaBody = z.infer<typeof quotaBodySchema>;
   });
   
 export type SociComissioBody = z.infer<typeof sociComissioBodySchema>;
+
+
+export type SociId = {sociId : number}
