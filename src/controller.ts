@@ -1,6 +1,6 @@
 import { catchErrors } from "./errors";
 import { send } from "./response";
-import  { idParamSchema, sociBodyUpdateSchema } from "./schemas";
+import  { idParamSchema, quotaBodySchema, sociBodyUpdateSchema, sociQuotaBodySchema } from "./schemas";
 import * as SociService from "./service";
 
 
@@ -34,4 +34,26 @@ export const updateSociById = catchErrors(async (req, res) => {
   const soci = await SociService.updateSociById(sociId, sociData)
   
   send(res).ok(soci);
+});
+
+
+export const getAllQuotes = catchErrors(async (req, res) => {
+  const quotes = await SociService.getAllSocis()
+    send(res).ok(quotes);
+});
+
+
+export const createSociAndQuota = catchErrors(async (req, res) => {
+  const sociQuotaData = sociQuotaBodySchema.parse(req.body);
+  const soci = await SociService.createSociAndQuota(sociQuotaData)
+
+  send(res).createOk(soci);
+});
+
+
+export const updateQuota = catchErrors(async (req, res) => {
+  const { id: quotaSociId } = idParamSchema.parse(req.params);
+  const quotaData = quotaBodySchema.parse(req.body)
+  const quota = await SociService.updateQuota(quotaSociId, quotaData)
+  send(res).ok(quota);
 });

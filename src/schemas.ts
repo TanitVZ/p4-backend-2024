@@ -43,6 +43,18 @@ export const idParamSchema = z.object({
     }),
   });
   
+  export type SociQuotaBody = z.infer<typeof sociQuotaBodySchema>;
+
+
+export const quotaBodySchema = z.object({
+  quantitat:  z.coerce.number().optional(),
+  iban: ibanValid.optional(),
+  quotaId :  z.coerce.number()
+
+})
+
+export type QuotaBody = z.infer<typeof quotaBodySchema>;
+
  export const sociComissioBodySchema = z.object({
     comissioId: z.array(z.coerce.number()),
     sociId: z.coerce.number(),

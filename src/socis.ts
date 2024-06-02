@@ -14,12 +14,11 @@ router.get("/soci/:id", SociController.getSociById);
 router.put("/soci/:id", SociController.updateSociById);
 
 //QUOTES
+router.get("/quotes", SociController.getAllQuotes);
 
-//router.get("/quotes", SociController.getAllQuotes);
+router.post("/quotes", SociController.createSociAndQuota);
 
-//router.post("/quotes", SociController.createSociAndQuota);
-
-//router.put("/quotes/:id", SociController.updateQuota);
+router.put("/quotes/:id", SociController.updateQuota);
 
 //COMISSIONS
 
