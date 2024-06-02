@@ -1,5 +1,10 @@
 import db from "./db";
-import type { QuotaBody, SociBodyUpdate, SociQuotaBody } from "./schemas";
+import type {
+  QuotaBody,
+  SociBodyUpdate,
+  SociComissioBody,
+  SociQuotaBody,
+} from "./schemas";
 
 export const getAllSocis = async () => {
   const socis = await db.soci.findMany({
@@ -68,13 +73,10 @@ export const getAllQuotes = async () => {
   return quotes;
 };
 
-
-
 export const createSociAndQuota = async (sociQuotaData: SociQuotaBody) => {
-  
   const soci = await db.soci.create({
     data: {
-      nom: sociQuotaData.nom ,
+      nom: sociQuotaData.nom,
       cognoms: sociQuotaData.cognoms,
       dni: sociQuotaData.dni,
       email: sociQuotaData.email,
@@ -90,28 +92,67 @@ export const createSociAndQuota = async (sociQuotaData: SociQuotaBody) => {
     include: {
       quotaSoci: true,
     },
-  }
-  )
+  });
   return soci;
-}
+};
 
-
-export const updateQuota = (async ( quotaSociId: number,
-  quotaData: QuotaBody) => {
- 
-
+export const updateQuota = async (
+  quotaSociId: number,
+  quotaData: QuotaBody
+) => {
   await db.quotaSoci.findUniqueOrThrow({ where: { quotaSociId } });
 
   const quota = await db.quotaSoci.update({
     where: { quotaSociId },
     data: {
       quantitat: quotaData.quantitat,
-      iban : quotaData.iban,
-      quotaId : quotaData.quotaId
+      iban: quotaData.iban,
+      quotaId: quotaData.quotaId,
     },
   });
-    return quota
-});
+  return quota;
+};
 
+export const createComissionsSocis = async (
+  sociComissioData: SociComissioBody
+) => {
+  const sociComissioDataMap = sociComissioData.comissioId.map((c) => ({
+    comissioId: c,
+    sociId: sociComissioData.sociId,
+  }));
+
+  const sociComissio = await db.comissioSoci.createMany({
+    data: sociComissioDataMap,
+  });
+  return sociComissio;
+};
+
+export const getAllComissions = async () => {
+  const comissions = await db.comissioSoci.findMany({
+    select: {
+      soci: {
+        select: {
+          nom: true,
+          cognoms: true,
+        },
+      },
+      comissio: {
+        select: {
+          nom: true,
+        },
+      },
+    },
+  });
+  return comissions;
+};
+
+export const deleteComissioById = async (comissioSocisId: number) => {
+  await db.comissioSoci.findUniqueOrThrow({ where: { comissioSocisId } });
+
+  const deletedComissioSoci = await db.comissioSoci.delete({
+    where: { comissioSocisId },
+  });
+  return deletedComissioSoci;
+};
 
 //export const createSociAndQuota = async (sociData : sociQuotaBodySchema)

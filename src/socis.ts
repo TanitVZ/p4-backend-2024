@@ -1,9 +1,8 @@
 import { Router } from "express";
 
-
 import * as SociController from "./controller";
 const router = Router();
-  
+
 //SOCIS
 router.get("/soci", SociController.getAllSocis);
 
@@ -22,13 +21,10 @@ router.put("/quotes/:id", SociController.updateQuota);
 
 //COMISSIONS
 
-//router.post("/comissio", SociController.createComissionsSocis);
+router.post("/comissio", SociController.createComissionsSocis);
 
-//router.get("/comissio", SociController.getAllComissions);
+router.get("/comissio", SociController.getAllComissions);
 
-//router.delete("/comissio/:id", SociController.deleteComissioById);
-
-//PROVA NOVA
-//router.delete("/borroSoci/:id", deleteQuota)
+router.delete("/comissio/:id", SociController.deleteComissioById);
 
 export default router;
