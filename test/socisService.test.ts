@@ -92,7 +92,7 @@ vi.mock("../src/db")
    
   });
 
-/* Funciona la prova, però no és vàlida, s'hauria de fer en el testos del controller
+
   describe("deleteSoci error", () => {
 
     it ("error al eliminar soci que no existeix", 
@@ -107,8 +107,7 @@ vi.mock("../src/db")
 
   })
 }) ;
-*/
-//}) ;
+
 
 
 
