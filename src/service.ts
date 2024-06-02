@@ -1,9 +1,5 @@
 import db  from "./db";
-import type {
-  idParamSchema,
-  sociComissioBodySchema,
-  sociQuotaBodySchema,
-} from "./schemas";
+import type { SociBodyUpdate } from "./schemas";
 
 export const getAllSocis = async () =>  {
     const socis = await db.soci.findMany({
@@ -25,7 +21,7 @@ export const getAllSocis = async () =>  {
     return soci;
   };
 
-export const deleteSoci = async (sociId :number) => {
+export const deleteSociById = async (sociId :number) => {
   
     await db.soci.findUniqueOrThrow({ where: { sociId } });
 
@@ -33,5 +29,22 @@ export const deleteSoci = async (sociId :number) => {
    
     return deletedSoci
 }  
+
+
+export const updateSociById = async (sociId :number, sociData : SociBodyUpdate ) => {
+
+await db.soci.findUniqueOrThrow({ where: { sociId } });
+
+  const updateSoci = await db.soci.update({
+    where: { sociId },
+    data: {
+      nom: sociData.nom ,
+      cognoms: sociData.cognoms,
+      email: sociData.email
+    },
+  });
+
+  return updateSoci
+}
 
 //export const createSociAndQuota = async (sociData : sociQuotaBodySchema)

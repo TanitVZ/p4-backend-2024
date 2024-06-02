@@ -1,6 +1,6 @@
 import { catchErrors } from "./errors";
 import { send } from "./response";
-import  { idParamSchema } from "./schemas";
+import  { idParamSchema, sociBodyUpdateSchema } from "./schemas";
 import * as SociService from "./service";
 
 
@@ -20,9 +20,19 @@ export const getAllSocis = catchErrors(async (req, res) => {
   });
 
 
-export const deleteSoci = catchErrors(async (req, res) => {
+export const deleteSociById = catchErrors(async (req, res) => {
     const { id: sociId } = idParamSchema.parse(req.params);
-const sociQuota = await SociService.deleteSoci(sociId)
+const sociQuota = await SociService.deleteSociById(sociId)
 send(res).ok(sociQuota);
 }  
 )   
+
+export const updateSociById = catchErrors(async (req, res) => {
+  const { id: sociId } = idParamSchema.parse(req.params);
+  console.log(sociId);
+  const sociData = sociBodyUpdateSchema.parse(req.body)
+  console.log(sociData);
+  const soci = await SociService.updateSociById(sociId, sociData)
+  console.log(soci);
+  send(res).ok(soci);
+});

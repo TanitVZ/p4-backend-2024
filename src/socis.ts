@@ -1,19 +1,17 @@
 import { Router } from "express";
 
-//import * as SociController from "./serviceController";
+
 import * as SociController from "./controller";
 const router = Router();
   
 //SOCIS
 router.get("/soci", SociController.getAllSocis);
 
-router.delete("/soci/:id", SociController.deleteSoci);
+router.delete("/soci/:id", SociController.deleteSociById);
 
 router.get("/soci/:id", SociController.getSociById);
 
-
-
-//router.put("/soci/:id", SociController.updateSociById);
+router.put("/soci/:id", SociController.updateSociById);
 
 //QUOTES
 
